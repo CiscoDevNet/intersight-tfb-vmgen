@@ -46,7 +46,7 @@ resource "vsphere_virtual_machine" "vm_deploy" {
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = vsphere_folder.vm_folder.path
-  firmware = "efi"
+  firmware = "bios"
 
   num_cpus = var.vm_cpu
   memory   = var.vm_memory
