@@ -95,13 +95,13 @@ resource "null_resource" "vm_node_init" {
     agent = false
   }
 
-  provisioner "remote-exec" {
-    inline = [
-        "echo 'cisco ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/cisco",
+//  provisioner "remote-exec" {
+//    inline = [
+//        "echo 'cisco ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/cisco",
 //	"chmod +x /tmp/appd.sh",
 //	"bash /tmp/appd.sh",
-    ]
-  }
+//    ]
+//  }
 }
 
 output "vm_deploy" {
