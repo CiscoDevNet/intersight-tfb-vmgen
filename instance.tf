@@ -85,7 +85,7 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "file" {
 	source = "scripts/appd.sh"
-	destination = "/tmp"
+	destination = "/tmp/"
   }
   connection {
     type = "ssh"
