@@ -78,9 +78,31 @@ resource "vsphere_virtual_machine" "vm_deploy" {
   }
 
 
+
+  provisioner "file" {
+        source = "scripts/appd.sh"
+        destination = "/tmp/appd.sh"
+  }
+  connection {
+    type = "ssh"
+    host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+    user = "cisco"
+    password = "${var.root_password}"
+    port = "22"
+    agent = false
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/appd.sh",
+        "bash /tmp/appd.sh",
+    ]
+  }
+
+
 }
 
-resource "null_resource" "vm_node_init" {
+/* resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
   provisioner "file" {
@@ -103,6 +125,7 @@ resource "null_resource" "vm_node_init" {
     ]
   }
 }
+*/
 
 output "vm_deploy" {
   value = [vsphere_virtual_machine.vm_deploy.*.name, vsphere_virtual_machine.vm_deploy.*.default_ip_address]
