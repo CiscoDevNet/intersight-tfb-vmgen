@@ -80,10 +80,13 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 
 }
 
-/*
 resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
+  provisioner "file" {
+	source = "scripts/appd.sh"
+	destination = "/tmp"
+  }
   connection {
     type = "ssh"
     host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
@@ -95,12 +98,11 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "remote-exec" {
     inline = [
-      #"apt install tree zip perl -y",
-      "shutdown -r"
+	"chmod +x /tmp/appd.sh",
+	"bash /tmp/appd.sh",
     ]
   }
 }
-*/
 
 output "vm_deploy" {
   value = [vsphere_virtual_machine.vm_deploy.*.name, vsphere_virtual_machine.vm_deploy.*.default_ip_address]
