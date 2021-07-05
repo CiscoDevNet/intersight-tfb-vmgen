@@ -98,6 +98,11 @@ resource "null_resource" "vm_node_init" {
   provisioner "remote-exec" {
     inline = [
 	"chmod +x /tmp/appd.sh",
+    ]
+  }
+
+  provisioner "remote-exec" {
+    script = [
 	"/tmp/appd.sh",
     ]
   }
