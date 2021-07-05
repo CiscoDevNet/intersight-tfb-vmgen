@@ -97,9 +97,8 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "remote-exec" {
     inline = [
-        "echo 'cisco ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/cisco",
-//	"chmod +x /tmp/appd.sh",
-//	"bash /tmp/appd.sh",
+	"chmod +x /tmp/appd.sh",
+	"bash /tmp/appd.sh",
     ]
   }
 }
