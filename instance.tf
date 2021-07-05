@@ -83,28 +83,31 @@ resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
   provisioner "file" {
-	source = "scripts/appd.sh"
-	destination = "/tmp/appd.sh"
-  }
-  connection {
-    type = "ssh"
-    host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-    user = "root"
-    password = "${var.root_password}"
-    port = "22"
-    agent = false
+    source = "scripts/appd.sh"
+    destination = "/tmp/appd.sh"
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
   }
 
   provisioner "remote-exec" {
     inline = [
 	"chmod +x /tmp/appd.sh",
+        "/tmp/appd.sh",
     ]
-  }
-
-  provisioner "remote-exec" {
-    script = [
-	"/tmp/appd.sh",
-    ]
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
   }
 }
 
