@@ -89,7 +89,7 @@ resource "null_resource" "vm_node_init" {
   connection {
     type = "ssh"
     host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-    user = "cisco"
+    user = "root"
     password = "${var.root_password}"
     port = "22"
     agent = false
