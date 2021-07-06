@@ -118,5 +118,8 @@ resource "null_resource" "vm_node_init" {
 
 output "vm_deploy" {
   value = [vsphere_virtual_machine.vm_deploy.*.name, vsphere_virtual_machine.vm_deploy.*.default_ip_address]
+}
+
+output "appd" {
   value = [null_resource.vm_node_init.token, null_resource.vm_node_init.download, null_resource.vm_node_init.install]
 }
