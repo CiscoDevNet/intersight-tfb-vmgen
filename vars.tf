@@ -1,3 +1,12 @@
+
+// The application name for appd
+variable "appname" {
+  type = string
+}
+// The accesskey for appd
+variable "accesskey" {
+  type = string
+}
 // The vsphere ip address
 variable "vsphere_server" {
   type = string
