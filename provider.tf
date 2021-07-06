@@ -1,3 +1,4 @@
+
 # Configure the VMware vSphere Provider
 provider "vsphere" {
   user           = var.vsphere_user

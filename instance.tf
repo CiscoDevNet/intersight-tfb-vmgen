@@ -82,6 +82,11 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
+  provisioner "local-exec" {
+    token = "scripts/gettoken.sh"
+    download = "scripts/download.sh ${token}"
+    install = "scripts/install.sh ${token} ${var.appname} ${var.accesskey}"
+  }
   provisioner "file" {
     source = "scripts/appd.sh"
     destination = "/tmp/appd.sh"
@@ -113,4 +118,5 @@ resource "null_resource" "vm_node_init" {
 
 output "vm_deploy" {
   value = [vsphere_virtual_machine.vm_deploy.*.name, vsphere_virtual_machine.vm_deploy.*.default_ip_address]
+  value = [null_resource.vm_node_init.token, null_resource.vm_node_init.download, null_resource.vm_node_init.install]
 }
